@@ -8,6 +8,9 @@ import './index.css'
 import App from './App.jsx'
 import AddCoffee from './components/AddCoffee.jsx';
 import UpdateCoffee from './components/UpdateCoffee.jsx';
+import SignIn from './components/SignIn.jsx';
+import SignUp from './components/SignUp.jsx';
+import AuthProviders from './providers/AuthProviders.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,17 +21,27 @@ const router = createBrowserRouter([
   {
     path: "addCoffee",
     element: <AddCoffee></AddCoffee>
-  }, 
+  },
   {
     path: "updateCoffee/:id",
     element: <UpdateCoffee></UpdateCoffee>,
-    loader: ({params}) => fetch(`http://localhost:5000/coffee/${params.id}`)
+    loader: ({ params }) => fetch(`http://localhost:5000/coffee/${params.id}`)
 
+  },
+  {
+    path: "signin",
+    element: <SignIn></SignIn>
+  },
+  {
+    path: "signup",
+    element: <SignUp></SignUp>
   }
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProviders>
+      <RouterProvider router={router} />
+    </AuthProviders>
   </StrictMode>,
 )
