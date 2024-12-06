@@ -13,23 +13,29 @@ const SignUp = () => {
         console.log(email, password);
 
         createUser(email, password)
-        .then(result => {
-            console.log(result.user);
+            .then(result => {
+                console.log(result.user);
 
-            const createdAt = result?.user?.metadata?.creationTime;
-            const newUser = { name, email, createdAt}
+                const createdAt = result?.user?.metadata?.creationTime;
+                const newUser = { name, email, createdAt }
 
-            fetch('http://localhost:5000/users', {
-                method: 'POST',
-                headers:{
-                    'content-type' : 'application/json',
-                },
-                body: JSON.stringify(newUser)
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                    body: JSON.stringify(newUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            console.log("User created db");
+                        }
+                    })
             })
-        })
-        .catch( error => {
-            console.log('error', error)
-        })
+            .catch(error => {
+                console.log('error', error)
+            })
     }
 
     return (
@@ -44,7 +50,7 @@ const SignUp = () => {
                 </div> */}
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                     <form onSubmit={handleSignUp} className="card-body">
-                    <div className="form-control">
+                        <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
@@ -66,7 +72,7 @@ const SignUp = () => {
                             </label>
                         </div>
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary">Login</button>
+                            <button className="btn btn-primary">SignUp</button>
                         </div>
                     </form>
                 </div>
